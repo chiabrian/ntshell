@@ -629,7 +629,8 @@ void ntshell_execute(ntshell_t *p)
     PROMPT_WRITE(p);
     while (1) {
         unsigned char ch;
-        SERIAL_READ(p, (char *)&ch, sizeof(ch));
+        if(SERIAL_READ(p, (char *)&ch, sizeof(ch)) < 0)
+            break;
         vtrecv_execute(&(p->vtrecv), &ch, sizeof(ch));
     }
 }
